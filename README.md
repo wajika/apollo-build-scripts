@@ -9,7 +9,7 @@
 
 不过这里需要注意的是，Quick Start只针对本地测试使用，如果要部署到生产环境，还请另行参考[分布式部署指南](https://github.com/ctripcorp/apollo/wiki/%E5%88%86%E5%B8%83%E5%BC%8F%E9%83%A8%E7%BD%B2%E6%8C%87%E5%8D%97)。
 
-> 注：Quick Start需要有bash环境，Windows用户建议安装[Git Bash](https://git-for-windows.github.io/)，或者也可以直接通过IDE环境启动，详见[Apollo开发指南](https://github.com/ctripcorp/apollo/wiki/Apollo%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97)。
+> 注：Quick Start需要有bash环境，Windows用户请安装[Git Bash](https://git-for-windows.github.io/)，或者也可以直接通过IDE环境启动，详见[Apollo开发指南](https://github.com/ctripcorp/apollo/wiki/Apollo%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97)。
 
 # 一、准备工作
 ## 1.1 Java
@@ -30,6 +30,8 @@ java version "1.8.0_74"
 Java(TM) SE Runtime Environment (build 1.8.0_74-b02)
 Java HotSpot(TM) 64-Bit Server VM (build 25.74-b02, mixed mode)
 ```
+
+Windows用户请确保JAVA_HOME环境变量已经设置。
 
 ## 1.2 MySQL
 
@@ -56,10 +58,18 @@ SHOW VARIABLES WHERE Variable_name = 'version';
     * **由于Quick Start项目比较大，所以放在了另外的repository，请注意项目地址**
         * https://github.com/nobodyiam/apollo-build-scripts
 2. 从百度网盘下载
-    * 通过[网盘链接](https://pan.baidu.com/s/187W86LoeVuv3DMrOJhcg1A)下载
+    * 通过[网盘链接](https://pan.baidu.com/s/1Ieelw6y3adECgktO0ea0Gg)下载，提取码: 9wwe
     * 下载到本地后，在本地解压apollo-quick-start.zip
-3. 为啥安装包要50M这么大？
+3. 为啥安装包要58M这么大？
     * 因为这是一个可以自启动的jar包，里面包含了所有依赖jar包以及一个内置的tomcat容器
+
+### 1.3.1 手动打包Quick Start安装包
+
+Quick Start只针对本地测试使用，所以一般用户不需要自己下载源码打包，只需要下载已经打好的包即可。不过也有部分用户希望在修改代码后重新打包，那么可以参考如下步骤：
+
+1. 修改apollo-configservice, apollo-adminservice和apollo-portal的pom.xml，注释掉spring-boot-maven-plugin和maven-assembly-plugin
+2. 在根目录下执行`mvn clean package -pl apollo-assembly -am -DskipTests=true`
+3. 复制apollo-assembly/target下的jar包，rename为apollo-all-in-one.jar
 
 # 二、安装步骤
 ## 2.1 创建数据库
@@ -242,4 +252,4 @@ Apollo Config Demo. Please input key to get the value. Input quit to exit.
 ```properties
 app.id=你的appId
 ```
-# 运行`./demo.sh client`启动Demo客户端即可。
+运行`./demo.sh client`启动Demo客户端即可。
